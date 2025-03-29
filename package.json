@@ -1,0 +1,17 @@
+{
+  "name": "backup-system",
+  "version": "1.0.0",
+  "main": "backup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Exider",
+  "license": "ISC",
+  "description": "Daily backup system for macOS with SSD connection tracking",
+  "dependencies": {
+    "fs-extra": "^11.3.0",
+    "moment": "^2.30.1",
+    "node-cron": "^3.0.3"
+  }
+}

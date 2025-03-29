@@ -1,0 +1,4 @@
+node_modules/
+backup.state.json
+backup.log
+.DS_Store
