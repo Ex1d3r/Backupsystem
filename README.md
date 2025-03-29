@@ -6,7 +6,7 @@
 ## English
 
 ### Overview
-A script for automatic daily backup from your Mac to an external SSD drive with connection checking and last backup tracking.
+A script for automatic daily backup from your Mac to an external SSD drive with connection checking, last backup tracking, and support for multiple backup configurations.
 
 ### Features
 - Checks if SSD is connected before backing up
@@ -15,6 +15,8 @@ A script for automatic daily backup from your Mac to an external SSD drive with 
 - Tracks status and time of last backup
 - Can run as a daemon (hourly checks)
 - Creates backups in a dedicated subfolder on the SSD to preserve other files
+- Supports multiple backup configurations with different source paths and output folders
+- Command-line interface for managing backup configurations
 
 ### Installation
 
@@ -32,21 +34,37 @@ Before using the script, you need to specify the path to your external SSD:
 node backup.js --set-destination /path/to/external/ssd
 ```
 
-#### Setting the output folder name (optional)
-By default, backups are stored in a folder named `mac_backups` on your SSD. You can change this:
+#### Managing backup configurations
 
+##### Adding a new backup configuration
 ```bash
-node backup.js --set-output-folder custom_backup_folder
+node backup.js --add-backup --name "Documents" --source "/Users/username/Documents" --folder "documents_backup"
 ```
 
-#### Running backup manually
+##### Removing a backup configuration
+```bash
+node backup.js --remove-backup 2  # Where 2 is the ID of the configuration
+```
 
+##### Editing a backup configuration
+```bash
+node backup.js --edit-backup 2 --name "New Name" --source "/new/path" --folder "new_folder"
+```
+All parameters for editing are optional - specify only what you want to change.
+
+#### Running backup manually
+For all configurations:
 ```bash
 node backup.js --backup-now
 ```
 
-#### Checking backup status
+For a specific configuration:
+```bash
+node backup.js --backup-now --id 2  # Where 2 is the ID of the configuration
+```
 
+#### Checking backup status
+View status of all backup configurations:
 ```bash
 node backup.js --status
 ```
@@ -89,7 +107,7 @@ node backup.js --help
 ## Русский
 
 ### Обзор
-Скрипт для автоматического ежедневного резервного копирования с Mac на внешний SSD с проверкой подключения и отслеживанием времени последнего бэкапа.
+Скрипт для автоматического ежедневного резервного копирования с Mac на внешний SSD с проверкой подключения, отслеживанием времени последнего бэкапа и поддержкой нескольких конфигураций резервного копирования.
 
 ### Функциональность
 - Проверка подключения SSD перед бэкапом
@@ -98,6 +116,8 @@ node backup.js --help
 - Отслеживание статуса и времени последнего бэкапа
 - Возможность запуска в режиме демона (проверки каждый час)
 - Создает бэкапы в отдельной подпапке на SSD, чтобы не затрагивать другие файлы
+- Поддержка нескольких конфигураций резервного копирования с разными исходными путями и выходными папками
+- Интерфейс командной строки для управления конфигурациями резервного копирования
 
 ### Установка
 
@@ -115,21 +135,37 @@ npm install
 node backup.js --set-destination /путь/к/внешнему/ssd
 ```
 
-#### Настройка имени выходной папки (опционально)
-По умолчанию бэкапы сохраняются в папке `mac_backups` на вашем SSD. Вы можете изменить это:
+#### Управление конфигурациями резервного копирования
 
+##### Добавление новой конфигурации
 ```bash
-node backup.js --set-output-folder имя_вашей_папки
+node backup.js --add-backup --name "Документы" --source "/Users/username/Documents" --folder "documents_backup"
 ```
 
-#### Запуск бэкапа вручную
+##### Удаление конфигурации
+```bash
+node backup.js --remove-backup 2  # Где 2 - это ID конфигурации
+```
 
+##### Редактирование конфигурации
+```bash
+node backup.js --edit-backup 2 --name "Новое имя" --source "/новый/путь" --folder "новая_папка"
+```
+Все параметры для редактирования опциональны - укажите только то, что хотите изменить.
+
+#### Запуск бэкапа вручную
+Для всех конфигураций:
 ```bash
 node backup.js --backup-now
 ```
 
-#### Проверка статуса бэкапа
+Для конкретной конфигурации:
+```bash
+node backup.js --backup-now --id 2  # Где 2 - это ID конфигурации
+```
 
+#### Проверка статуса бэкапа
+Просмотр статуса всех конфигураций:
 ```bash
 node backup.js --status
 ```
@@ -166,4 +202,5 @@ node backup.js --help
 
 1. Убедитесь, что у вас установлена утилита `rsync` (обычно она предустановлена в macOS)
 2. Логи операций сохраняются в файл `backup.log` в директории скрипта
-3. Бэкапы хранятся в подпапке `mac_backups` на вашем SSD
+3. Для каждой конфигурации можно указать отдельную подпапку для хранения бэкапов на SSD
+4. Используйте уникальные имена для конфигураций, чтобы легче их идентифицировать
